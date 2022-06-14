@@ -5,8 +5,7 @@ Collects Pulsar topic data and sends it to Azure Monitor so that alerts can moni
 ### How to run locally?
 
 Have `.env` file at the project directory containing all of the secret values (you can get secrets from a pulsar-proxy VM from pulsar-dev resource group)
-
-Run
+and then run:
 ```
 python3 main.py
 ```
