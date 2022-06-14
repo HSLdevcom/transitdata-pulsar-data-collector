@@ -14,10 +14,10 @@ CLIENT_SECRET=os.getenv('CLIENT_SECRET')
 ADMIN_URL=os.getenv('ADMIN_URL')
 NAMESPACE=os.getenv('NAMESPACE')
 PULSAR_PROXY_RESOURCE_ID=os.getenv('PULSAR_PROXY_RESOURCE_ID')
+ACCESS_TOKEN_PATH = os.getenv('ACCESS_TOKEN_PATH')
 
 ### SECRETS / ENV VARIABLES ###############################
 
-ACCESS_TOKEN_FILE = "access_token.txt"
 
 METRIC_MSG_RATE_IN = "Msg Rate In"
 METRIC_MSG_RATE_OUT = "Msg Rate Out"
@@ -150,7 +150,7 @@ def send_custom_metrics_request(custom_metric_json, attempts_remaining):
 
     make_sure_access_token_file_exists()
     # Create access_token.txt file, if it does not exist
-    f = open(ACCESS_TOKEN_FILE, "r")
+    f = open(ACCESS_TOKEN_PATH, "r")
     existing_access_token = f.read()
     f.close()
 
@@ -184,11 +184,11 @@ def send_custom_metrics_request(custom_metric_json, attempts_remaining):
 
 def make_sure_access_token_file_exists():
     try:
-        f = open(ACCESS_TOKEN_FILE, "r")
+        f = open(ACCESS_TOKEN_PATH, "r")
         f.close()
     except Exception as e:
         # Create access_token.txt file, if it does not exist
-        f = open(ACCESS_TOKEN_FILE, "x")
+        f = open(ACCESS_TOKEN_PATH, "x")
         f.close()
 
 def request_new_access_token_and_write_it_on_disk():
@@ -206,7 +206,7 @@ def request_new_access_token_and_write_it_on_disk():
     new_access_token = response_dict['access_token']
 
     print("Saving Access token on disk........")
-    f = open(ACCESS_TOKEN_FILE, "w")
+    f = open(ACCESS_TOKEN_PATH, "w")
     f.write(new_access_token)
     f.close()
     print("........Access token saved on disk")
