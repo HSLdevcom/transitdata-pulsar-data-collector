@@ -16,7 +16,7 @@ If you need to send new custom metrics to Azure Monitor,
 you can firstly test sending by editing
 `custom_metric_example.json` and running:
 ```
-curl -X POST https://<azureRegion>.monitoring.azure.com/<resourceId>/metrics -H "Content-Type: application/json" -H "Authorization: Bearer <AccessToken>" -d @custom_metric_example.json
+curl -X POST https://westeurope.monitoring.azure.com/<resourceId>/metrics -H "Content-Type: application/json" -H "Authorization: Bearer <AccessToken>" -d @custom_metric_example.json
 ```
 Notes:
 - Edit what you need in `custom_metric_example.json` (at least the timestamp)
