@@ -1,0 +1,28 @@
+{
+    "time": "2022-06-13T09:06:00",
+    "data": {
+        "baseData": {
+            "metric": "MsgRateIn",
+            "namespace": "Pulsar",
+            "dimNames": [
+              "Topic"
+            ],
+            "series": [
+              {
+                "dimValues": [
+                  "hfp-mqtt-raw-deduplicated/v2"
+                ],
+                "sum": 1539,
+                "count": 1
+              },
+              {
+                "dimValues": [
+                  "hfp/v2"
+                ],
+                "sum": 1540,
+                "count": 1
+              }
+            ]
+        }
+    }
+}
