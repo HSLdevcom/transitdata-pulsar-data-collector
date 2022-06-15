@@ -24,4 +24,4 @@ Notes:
 
 ### Deployment
 
-Deployment is done with ansible on the pulsar proxy server. In order to update this app, create a new release in github and run the pulsar proxy playbook.
+Deployment is done with ansible on the pulsar proxy server. In order to update this app, create a new release in github: https://github.com/HSLdevcom/transitdata-pulsar-data-collector/releases/new and run the pulsar proxy playbook.
