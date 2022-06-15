@@ -4,6 +4,8 @@ Collects Pulsar topic data and sends it to Azure Monitor so that alerts can moni
 
 ### Run locally
 
+Have a tunnel open to pulsar_dev_proxy so that `ADMIN_URL` env variable points to pulsar admin's port.
+
 Have `.env` file at the project directory containing all of the secret values (you can get secrets from a pulsar-proxy VM from pulsar-dev resource group)
 and then run:
 ```
