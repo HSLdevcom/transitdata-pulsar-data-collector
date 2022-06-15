@@ -134,7 +134,7 @@ def get_series_array(topic_data_collection, topic_data_metric_name, topic_names_
             "dimValues": [
                 topic_name
             ],
-            "sum": round(topic_data_collection[topic_name][topic_data_metric_name]),
+            "sum": round(topic_data_collection[topic_name][topic_data_metric_name], 1),
             "count": 1
         }
         series_array.append(dimValue)
