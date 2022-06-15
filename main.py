@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-### SECRETS / ENV VARIABLES ###############################
+### SECRETS / ENV VARIABLES ###
 
 TENANT_ID=os.getenv('TENANT_ID')
 CLIENT_ID=os.getenv('CLIENT_ID')
@@ -16,7 +16,7 @@ NAMESPACE=os.getenv('NAMESPACE')
 PULSAR_PROXY_RESOURCE_ID=os.getenv('PULSAR_PROXY_RESOURCE_ID')
 ACCESS_TOKEN_PATH = os.getenv('ACCESS_TOKEN_PATH')
 
-### SECRETS / ENV VARIABLES ###############################
+### SECRETS / ENV VARIABLES ###
 
 
 METRIC_MSG_RATE_IN = "Msg Rate In"
@@ -81,6 +81,7 @@ def send_metrics_into_azure(topic_data_collection):
     send_pulsar_topic_metric_into_azure(METRIC_MSG_RATE_IN, "msgRateIn", topic_data_collection, TOPIC_NAMES_TO_COLLECT_MSG_RATE_IN)
     send_pulsar_topic_metric_into_azure(METRIC_MSG_RATE_OUT, "msgRateOut", topic_data_collection, TOPIC_NAMES_TO_COLLECT_MSG_RATE_OUT)
     send_pulsar_topic_metric_into_azure(METRIC_STORAGE_SIZE, "storageSize", topic_data_collection, TOPIC_NAMES_TO_COLLECT_STORAGE_SIZE)
+    print(f'Pulsar metrics sent: {datetime.now().strftime("%Y-%m-%dT%H:%M:%S")}')
 
 def send_pulsar_topic_metric_into_azure(
         log_analytics_metric_name,
@@ -146,15 +147,12 @@ def send_custom_metrics_request(custom_metric_json, attempts_remaining):
         return
     attempts_remaining = attempts_remaining - 1
 
-    print(f'At send_custom_metrics_request, attempts_remaining: {attempts_remaining}')
-
     make_sure_access_token_file_exists()
     # Create access_token.txt file, if it does not exist
     f = open(ACCESS_TOKEN_PATH, "r")
     existing_access_token = f.read()
     f.close()
 
-    print(f'Sending custom metrics into Azure: {custom_metric_json}')
     pulsar_proxy_resource_id = PULSAR_PROXY_RESOURCE_ID
     request_url = f'https://westeurope.monitoring.azure.com/{pulsar_proxy_resource_id}/metrics'
     headers = {'Content-type': 'application/json', 'Authorization': f'Bearer {existing_access_token}'}
@@ -167,8 +165,6 @@ def send_custom_metrics_request(custom_metric_json, attempts_remaining):
     # Try catch because json.loads(response.text) might not be available
     try:
         response_dict = json.loads(response.text)
-        print(response_dict)
-        print(response_dict['Error']['Code'])
         if response_dict['Error']['Code'] == 'TokenExpired':
             print("Currently stored access token has expired, getting a new access token.")
             request_new_access_token_and_write_it_on_disk()
