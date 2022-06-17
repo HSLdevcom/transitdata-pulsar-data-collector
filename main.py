@@ -18,7 +18,6 @@ ACCESS_TOKEN_PATH = os.getenv('ACCESS_TOKEN_PATH')
 
 ### SECRETS / ENV VARIABLES ###
 
-
 METRIC_MSG_RATE_IN = "Msg Rate In"
 METRIC_MSG_RATE_OUT = "Msg Rate Out"
 METRIC_STORAGE_SIZE = "Storage Size"
@@ -131,11 +130,17 @@ def send_pulsar_topic_metric_into_azure(
 def get_series_array(topic_data_collection, topic_data_metric_name, topic_names_to_collect):
     series_array = []
     for topic_name in topic_names_to_collect:
+        topic_msg_count = topic_data_collection[topic_name][topic_data_metric_name]
+        # Special case: we want to multiply stop-cancellation messages by 10
+        # so that the data would show more likely in Azure's charts
+        if topic_name == "internal-messages/stop-cancellation":
+            topic_msg_count = topic_msg_count * 10
+
         dimValue = {
             "dimValues": [
                 topic_name
             ],
-            "sum": round(topic_data_collection[topic_name][topic_data_metric_name], 1),
+            "sum": round(topic_msg_count),
             "count": 1
         }
         series_array.append(dimValue)
