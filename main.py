@@ -39,6 +39,7 @@ TOPIC_NAMES_TO_COLLECT_MSG_RATE_IN = [
 ]
 
 TOPIC_NAMES_TO_COLLECT_MSG_RATE_OUT = [
+    "hfp/passenger-count",
     "gtfs-rt/feedmessage-vehicleposition",
     "gtfs-rt/feedmessage-tripupdate"
 ]
